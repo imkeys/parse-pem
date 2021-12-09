@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <title>测试</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{title}}</h1>
+    <div>
+      <div>
+        <div class="dialog">
+          <dl class="tips">
+            <dd class="be">
+              <i class="cms-icon icon-jinggao3"></i>
+              <span>实现HTTPS认证后，会让网站更安全，更专业，更受人信赖，并利于SEO收录与排名</span>
+            </dd>
+          </dl>
+          <dl class="process">
+            <dt> HTTPS认证参考流程：</dt>
+            <dd>1）购买证书</dd>
+            <dd>2）至域名管理平台，添加证书的TXT记录</dd>
+            <dd>3）至证书购买平台，获取并解压证书文件</dd>
+            <dd>4）将解压后的证书文件，分别上传到下方对应位置</dd>
+            <dd>5）点击确定，程序解析文件并安装，出现“已支持https”提示后，表示安装成功</dd>
+          </dl>
+          <dl class="uploader">
+            <dd>
+              <span>key文件：</span>
+              <el-button>
+                <span>点击上传</span>
+                <input type="file" name="" id="fileIsKey">
+              </el-button>
+              <label>1109private.key</label>
+            </dd>
+            <dd>
+              <span>pem/crt文件：</span>
+              <el-button>
+                <span>点击上传</span>
+                <input type="file" name="" @change="uploadPem($event)" id="fileIsPem">
+              </el-button>
+              <label>{{pem.title}}</label>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    import { parsePem, interpreter } from './parse-pem.js'
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        title: '模拟读取本地pem文件，并解析其关键内容',
+        pem: {
+          title: ''
+        }
+      },
+      methods: {
+        uploadPem (event) {
+          let file = event.target.files[0]
+          this.pem.title = file.name
+          const reader = new FileReader()
+          reader.onload = (function() {
+            return function() {
+              console.log(this.result)
+              // 解析pem
+              let asn1 = parsePem(this.result)
+              asn1 = interpreter.certInterpreter(asn1);
+              console.log('asn1 ==> ', asn1)
+            }
+          })(file)
+          reader.readAsText(file)
+        }
+      }
+    })
+  </script>
+  <style>
+    .dialog {
+      max-width: 700px;
+      padding: 20px;
+      border: 1px solid #dddddd;
+    }
+    .dialog .tips {
+      text-align: center;
+      color:rgb(252, 175, 10);
+    }
+    .dialog .process {
+      background: #f9f9f9;
+      margin: 0 30px;
+      font-size: 13px;
+      line-height: 1.8;
+      padding: 15px;
+    }
+    .dialog .uploader {}
+  </style>
+</body>
+</html>
