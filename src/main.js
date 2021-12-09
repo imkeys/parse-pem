@@ -2,14 +2,10 @@ import Vue from 'vue'
 import axios from 'axios'
 import router from './router'
 import App from './App'
-
 import elementui from 'element-ui'
 import VueI18n from 'vue-i18n'
 
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock').default
-  mockXHR()
-}
+import '@/styles/skin.less'
 
 const i18n = new VueI18n({
   locale: window.localStorage.getItem('language') || 'zh_CN',

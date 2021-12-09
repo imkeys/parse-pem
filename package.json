@@ -5,21 +5,15 @@
   "author": "liqingyun <liqingyun.chn@qq.com>",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
     "dev": "npm run serve",
-    "build": "cross-env NODE_ENV=production vue-cli-service build --mode production",
-    "package": "git pull && npm run build && node upload && git add . && git commit -m 'package' &&  git push ",
-    "lint": "vue-cli-service lint --fix",
-    "docker": "node tag"
+    "serve": "vue-cli-service serve",
+    "build": "cross-env NODE_ENV=production vue-cli-service build --mode production"
   },
   "dependencies": {
-    "js-cookie": "^2.2.1",
     "nprogress": "0.2.0",
-    "screenfull": "^5.0.2",
     "vue-i18n": "^8.17.4",
     "vue": "2.6.11",
-    "vuex": "^3.3.0",
-    "path-to-regexp": "2.4.0"
+    "vuex": "^3.3.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

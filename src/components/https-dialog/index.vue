@@ -10,16 +10,7 @@
     <div>
       <dl class="tips">
         <dd class="be">
-          <i class="cms-icon icon-jinggao3"></i>
           <span>实现HTTPS认证后，会让网站更安全，更专业，更受人信赖，并利于SEO收录与排名</span>
-        </dd>
-        <dd class="success">
-          <i class="cms-icon icon-zhengqueshixin"></i>
-          <span>您的网站已支持https，证书将于 <em>2022-10-1</em> 到期，到期后https会失效</span>
-        </dd>
-        <dd class="overdue">
-          <i class="cms-icon icon-jinggao2"></i>
-          <span> 证书已过期，请及时续费并更新文件，以免影响网站的使用效果</span>
         </dd>
       </dl>
       <dl class="process">
@@ -70,7 +61,7 @@
 
 <script>
 import elDragDialog from '@/directives/el-drag-dialog'
-const parsePem = require('./parse')
+const parsePem = require('@/utils/parse')
 
 export default {
   name: 'HttpsDialog',
@@ -106,7 +97,11 @@ export default {
       setTimeout(() => {
         this.visible = false
         this.loading = false
-      }, 5000)
+        this.$emit('callback', {
+          keyFile: this.keyFile,
+          pemFile: this.pemFile
+        })
+      }, 1000)
     },
     uploadFile (event, type) {
       let that = this
@@ -144,7 +139,7 @@ export default {
   }
   .tips {
     position: relative;
-    margin: -20px 0 0 0;
+    margin: -10px 0 20px 0;
     text-align: center;
     .cms-icon {
       vertical-align: middle;

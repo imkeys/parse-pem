@@ -2,16 +2,18 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Router Modules
-import pageRouter from './modules/page'
 Vue.use(Router)
 
 // BASIC_ROUTES
 export const BASIC_ROUTES = [
   {
     path: '/(index)?',
-    redirect: '/home'
+    component: () => import('@/views/pem/')
   },
-  ...pageRouter,
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404')
+  },
   {
     path: '/404',
     component: () => import('@/views/error-page/404')
@@ -31,6 +33,7 @@ export const ASYNC_ROUTES = [
 ]
 
 const createRouter = () => new Router({
+  mode: 'history',
   scrollBehavior: () => ({
     y: 0
   }),
